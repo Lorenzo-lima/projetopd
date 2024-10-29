@@ -15,11 +15,19 @@ Relatório: Cada aluno possui relatórios com informações como resumo, estrat�
 <strong>Dependências</strong>
 
 Express: Estrutura de roteamento e middleware do backend.
+
 Mongoose: Interface para conexão com o MongoDB.
+
 bcrypt: Biblioteca para hash de senhas.
+
 jsonwebtoken: Geração e verificação de tokens JWT para autenticação.
+
 dotenv: Para gerenciar variáveis de ambiente.
+
 helmet: Melhorar a segurança adicionando cabeçalhos HTTP.
+
 cors: Permitir solicitações de diferentes origens (cross-origin).
+
 express-rate-limit: Limitar a quantidade de requisições para evitar ataques de força bruta.
+
 joi: Validação de dados de entrada no backend.

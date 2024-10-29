@@ -4,7 +4,7 @@ const StudentSchema = new mongoose.Schema({
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, trim: true, lowercase: true },
     pdcode: { type: String, required: true, trim: true },
-    workspace: { type: mongoose.Schema.Types.ObjectId, ref: 'Workspace', required: true },
+    workspace: { type: mongoose.Schema.Types.ObjectId, ref: 'Workspace' },
     reports: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Report' }],
 }, {
     timestamps: true,

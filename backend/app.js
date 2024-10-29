@@ -3,9 +3,9 @@ import helmet from 'helmet'
 import cors from 'cors'
 import limiter from './middleware/rateLimiterMiddleware.js'
 import authRoutes from './routes/authRoutes.js'
+import workspaceRoutes from './routes/workspaceRoutes.js'
 /*
 import userRoutes from './routes/userRoutes.js'
-import workspaceRoutes from './routes/workspaceRoutes.js'
 import studentRoutes from './routes/studentRoutes.js'
 import reportRoutes from './routes/reportRoutes.js' */
 
@@ -19,9 +19,9 @@ app.use(limiter)
 
 // Routes
 app.use('/api/auth', authRoutes)
+app.use('/api/workspaces', workspaceRoutes)
 /*
 app.use('/api/users', userRoutes)
-app.use('/api/workspaces', workspaceRoutes)
 app.use('/api/students', studentRoutes)
 app.use('/api/reports', reportRoutes) */
 
