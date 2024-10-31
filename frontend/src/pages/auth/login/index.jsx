@@ -1,7 +1,7 @@
-import './style.css'
 import { Link } from 'react-router-dom'
 import api from '../../../../../backend/services/api.js'
 import { useRef } from 'react'
+import Header from '../../../components/Header/index.jsx'
 
 function Login() {
 
@@ -24,6 +24,9 @@ function Login() {
     return (
       <>
       <div>
+        <Header />
+      </div>
+      <div>
       <form onSubmit={handleSubmit}> 
             <input placeholder="Digite seu email" ref={emailRef} type="email" name="email" id="email" />
             <input placeholder="Digite sua senha" ref={passwordRef} type="password" name="password" id="password" />
@@ -36,4 +39,3 @@ function Login() {
   }
   
   export default Login
-  
