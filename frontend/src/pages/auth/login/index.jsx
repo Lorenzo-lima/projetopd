@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import api from '../../../../../backend/services/api.js'
 import { useRef } from 'react'
 
-
 function Login() {
 
     const emailRef = useRef ()
@@ -13,14 +12,13 @@ function Login() {
         event.preventDefault()
         try {   
             await api.post('/api/auth/login', {
-                email:emailRef.current.value,
-                password:passwordRef.current.value
+                email: emailRef.current.value,
+                password: passwordRef.current.value
             })
             console.log("Usuário logado com sucesso!")
         } catch(error) {
             console.log("Erro ao fazer login!")
         }
-
     }
 
     return (
