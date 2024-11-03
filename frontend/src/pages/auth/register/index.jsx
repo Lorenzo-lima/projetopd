@@ -1,4 +1,3 @@
-import './style.css'
 import api from '../../../../../backend/services/api.js'
 import { Link, useNavigate } from 'react-router-dom'
 import { useRef, useState } from 'react'

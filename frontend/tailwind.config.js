@@ -5,8 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customPink: '#C820A7', // Cor personalizada para o botão
+      },
+    },
   },
   plugins: [],
-}
+};
+
 
