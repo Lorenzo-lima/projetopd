@@ -3,9 +3,13 @@ import Workspace from "../models/workspaceModel.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase()
+}
+
 export const register = async (req, res) => {
     try {
-        const { name, email, password, confirm_password, role } = req.body
+        let { name, email, password, confirm_password, role } = req.body
 
         if(!name || !email || !password || !confirm_password) {
             return res.status(400).json({ message: 'Todos os campos sao obrigatorios.' })
@@ -19,6 +23,8 @@ export const register = async (req, res) => {
         if (password !== confirm_password) {
             return res.status(400).json({ message: 'As senhas não coincidem.' })
         }
+
+        name = capitalizeFirstLetter(name)
 
         const newUser = new User({
             name,
@@ -67,9 +73,9 @@ export const login = async (req, res) => {
             return res.status(400).json({ message: 'Senha incorreta'})
         }
 
-        const token = jwt.sign({ id: user._id , role: user.role}, process.env.JWT_SECRET, { expiresIn: '24h' })
+        const token = jwt.sign({ id: user._id , role: user.role}, process.env.JWT_SECRET, { expiresIn: '12h' })
 
-        res.status(201).json({ message: 'Login bem-sucedido!', token})
+        res.status(201).json({ token, name: user.name })
 
     } catch (error) {
         console.error(error)

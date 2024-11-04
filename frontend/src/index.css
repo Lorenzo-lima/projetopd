@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -9,8 +15,94 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Inktrap Light */
+@font-face {
+  font-family: 'PP Neue Machina Inktrap Light';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-InktrapLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
 }
+
+@font-face {
+  font-family: 'PP Neue Machina Inktrap Light Italic';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-InktrapLightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* Inktrap Regular */
+@font-face {
+  font-family: 'PP Neue Machina Inktrap Regular';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-InktrapRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PP Neue Machina Inktrap Regular Italic';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-InktrapRegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Inktrap Ultrabold */
+@font-face {
+  font-family: 'PP Neue Machina Inktrap Ultrabold';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-InktrapUltrabold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PP Neue Machina Inktrap Ultrabold Italic';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-InktrapUltraboldItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+/* Plain Light */
+@font-face {
+  font-family: 'PP Neue Machina Plain Light';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-PlainLight.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PP Neue Machina Plain Light Italic';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-PlainLightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* Plain Regular */
+@font-face {
+  font-family: 'PP Neue Machina Plain Regular';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-PlainRegular.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PP Neue Machina Plain Regular Italic';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-PlainRegularItalic.otf') format('opentype');
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Plain Ultrabold */
+@font-face {
+  font-family: 'PP Neue Machina Plain Ultrabold';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-PlainUltrabold.otf') format('opentype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'PP Neue Machina Plain Ultrabold Italic';
+  src: url('./fonts/PP Neue Machina - Free for Personal Use/PPNeueMachina-PlainUltraboldItalic.otf') format('opentype');
+  font-weight: 800;
+  font-style: italic;
+}
+
+
