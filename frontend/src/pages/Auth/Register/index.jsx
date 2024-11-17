@@ -46,7 +46,7 @@ function Register () {
                             type="text"
                             name="name"
                             id="name"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="select-none font-neue-machina-plain-light w-full min-h-[50px] text-sm p-3 border border-gray-400 rounded-md text-gray-700"
                         />
                         <input
@@ -55,7 +55,7 @@ function Register () {
                             type="email"
                             name="email"
                             id="email"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="select-none font-neue-machina-plain-light w-full min-h-[50px] text-sm p-3 border border-gray-400 rounded-md text-gray-700"
                         />
                         <input
@@ -64,7 +64,7 @@ function Register () {
                             type="password"
                             name="password"
                             id="password"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="select-none font-neue-machina-plain-light w-full min-h-[50px] text-sm p-3 border border-gray-400 rounded-md text-gray-700"
                         />
                         <input
@@ -73,7 +73,7 @@ function Register () {
                             type="password"
                             name="confirm_password"
                             id="confirm_password"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="select-none font-neue-machina-plain-light w-full min-h-[50px] text-sm p-3 border border-gray-400 rounded-md text-gray-700"
                         />
                         <button

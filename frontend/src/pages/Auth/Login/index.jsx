@@ -21,12 +21,9 @@ function Login() {
                 password: passwordRef.current.value
             })
 
-            const { token, name } = response.data
-            localStorage.setItem('token', token)
-            localStorage.setItem('username', name)
-
             navigate('/home')
         } catch (error) {
+            console.error('Erro ao fazer login:', error.response?.data || error.message)
             setErrorMessage(error.response?.data?.message || 'Erro ao fazer login!')
         }
     }
@@ -49,7 +46,7 @@ function Login() {
                             type="email"
                             name="email"
                             id="email"
-                            autocomplete="off"
+                            autoComplete="off"
                             className="select-none outline-none font-neue-machina-plain-light w-full min-h-[50px] text-sm p-3 border border-gray-400 rounded-md text-gray-700"
                         />
                         <label className="flex justify-between select-none font-neue-machina-plain-light w-full min-h-[50px] text-sm p-3 border border-gray-400 rounded-md text-gray-700">
@@ -59,7 +56,7 @@ function Login() {
                                 type={isShow ? 'text' : 'password'}
                                 name="password"
                                 id="password"
-                                autocomplete="off"
+                                autoComplete="off"
                                 className="outline-none"
                             />
                             <button
