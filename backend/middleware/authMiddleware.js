@@ -1,13 +1,11 @@
 import jwt from 'jsonwebtoken';
 
 export default function authMiddleware (req, res, next) {
-    const authHeader = req.headers.authorization
+    const token = req.cookies.authToken
 
-    if (!authHeader) {
-        return res.status(401).json({ message: 'Token nao fornecido' })
+    if (!token) {
+        return res.status(401).json({ message: 'Token não fornecido' })
     }
-
-    const token = authHeader.split(' ')[1]
 
     try {
         const decoded = jwt.verify(token, process.env.JWT_SECRET)

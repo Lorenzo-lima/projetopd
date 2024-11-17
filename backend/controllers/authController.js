@@ -75,10 +75,26 @@ export const login = async (req, res) => {
 
         const token = jwt.sign({ id: user._id , role: user.role}, process.env.JWT_SECRET, { expiresIn: '2h' })
 
-        res.status(201).json({ token, name: user.name })
+        res.cookie('authToken', token, {
+            httpOnly: true, // O cookie não será acessível via JavaScript
+            secure: process.env.NODE_ENV === 'production', // HTTPS apenas em produção
+            sameSite: 'Strict', // Proteção contra CSRF
+            maxAge: 2 * 60 * 60 * 1000, // 2 horas
+        });
+        res.status(201).json({ message: 'Login bem sucedido!' });
+
 
     } catch (error) {
         console.error(error)
         res.status(500).json({ message: 'Erro no servidor', error: error.message })
     }
+}
+
+export const logout = (req, res) => {
+    res.clearCookie('authToken', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'Strict'
+    })
+    res.status(200).json({ message: 'Logout realizado com sucesso' })
 }
