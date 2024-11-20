@@ -76,7 +76,7 @@ export const login = async (req, res) => {
         const token = jwt.sign({ id: user._id , role: user.role}, process.env.JWT_SECRET, { expiresIn: '2h' })
 
         res.cookie('authToken', token, {
-            httpOnly: true, // O cookie não será acessível via JavaScript
+            httpOnly: false, // O cookie não será acessível via JavaScript
             secure: process.env.NODE_ENV === 'production', // HTTPS apenas em produção
             sameSite: 'Strict', // Proteção contra CSRF
             maxAge: 2 * 60 * 60 * 1000, // 2 horas

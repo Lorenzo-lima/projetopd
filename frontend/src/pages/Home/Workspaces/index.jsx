@@ -1,76 +1,87 @@
-import api from '../../../../../backend/services/api.js'
-import ErrorDisplay from "../../../components/ErrorDisplay/index.jsx"
-import { useEffect, useState } from "react"
-import { User, DoorOpen } from 'lucide-react'
-import { useNavigate } from "react-router-dom"
+import { User, DoorOpen } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../../../../../backend/services/api.js";
+import ErrorDisplay from "../../../components/ErrorDisplay/index.jsx";
 
-function Workspaces(){
-    const [ username, setUsername ] = useState('')
-    const [ workspaces, setWorkspaces ] = useState([])
-    const [ error, setError ] = useState(null)
-    const navigate = useNavigate()
+function Workspaces() {
+    const [username, setUsername] = useState("");
+    const [workspaces, setWorkspaces] = useState([]);
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
-    useEffect(()=>{
+    useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const userResponse = await api.get('/api/user/me')
-                setUsername(userResponse.data.name)
+                const userResponse = await api.get("/api/user/me");
+                setUsername(userResponse.data.name);
 
-                const workspaceResponse = await api.get('/api/workspaces')
-                setWorkspaces(workspaceResponse.data)
+                const workspaceResponse = await api.get("/api/workspaces");
+                setWorkspaces(workspaceResponse.data);
 
-                setError(null)
+                setError(null);
             } catch (error) {
-                setError(error.response?.data?.message)
-                navigate('/')
+                setError(error.response?.data?.message);
+                navigate("/");
             }
-        }
+        };
 
-        fetchUserData()
-    },[])
+        fetchUserData();
+    }, []);
 
     const handleLogOut = async () => {
         try {
-            // Requisição para limpar cookies no backend
-            await api.post('/api/auth/logout');
-            setUsername('')
-            navigate('/')
+            await api.post("/api/auth/logout");
+            setUsername("");
+            navigate("/");
         } catch (error) {
-            console.error('Erro ao fazer logout:', error.response?.data?.message || error.message)
+            console.error(
+                "Erro ao fazer logout:",
+                error.response?.data?.message || error.message
+            );
         }
-    }
+    };
+
 
     return (
-        <> <ErrorDisplay errorMessage={error} />
-            <div className="flex flex-col items-center bg-customBg w-[15%] min-h-screen px-1 py-1">
-                <div className="flex justify-between px-5 py-5">
-                    <User size={30}/>
-                    <p className="font-neue-machina-plain-ultrabold">{username}</p>
+        <>
+            <ErrorDisplay errorMessage={error} />
+            <div className="flex flex-col bg-gray-100 w-[15%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular">
+                {/* Header */}
+                <div className="flex items-center p-4 border-b border-gray-300">
+                    <User size={26} className="mr-2 text-gray-600" />
+                    <p className="text-gray-800 font-semibold text-lg mt-3">{username}</p>
                 </div>
-                <div className="flex-grow justify-center items-center mt-3 w-full">
-                    <h1 className="text-2xl text-center font-neue-machina-plain-regular">Workspaces</h1>
-                    <ul className="font-neue-machina-plain-light flex flex-col mt-4 justify-center items-center">
-                        {workspaces.map(workspace => (
+
+                {/* Workspaces */}
+                <div className="flex flex-col px-6 mt-6">
+                    <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">Workspaces</h1>
+                    <ul className="space-y-3">
+                        {workspaces.map((workspace) => (
                             <li
                                 key={workspace._id}
-                                className="text-center bg-customBgGrey w-4/5 rounded-md py-1 mt-2 text-white text-2xl cursor-pointer font-semibold hover:bg-pink-700 transition duration-300"
+                                onClick={() => navigate(`home/workspace/${workspace._id}/students`)}
+                                className="bg-gray-200 rounded-md py-3 px-4 text-gray-800 text-lg font-medium text-center cursor-pointer hover:bg-customPink hover:text-white transition duration-300"
                             >
                                 {workspace.name}
                             </li>
                         ))}
                     </ul>
                 </div>
-                <div className="flex justify-center border-solid border-2 border-black w-16 rounded-md">
+
+                {/* Footer */}
+                <div className="mt-auto flex justify-center p-4 border-t border-gray-300">
                     <button
                         type="button"
                         onClick={handleLogOut}
-                        className="px-3 py-1">
-                        <DoorOpen size={20}/>
+                        className="flex items-center justify-center bg-gray-100 border border-gray-400 rounded-md p-3 hover:bg-gray-200 transition"
+                    >
+                        <DoorOpen size={20} className="text-gray-600" />
                     </button>
                 </div>
             </div>
         </>
-    )
+    );
 }
 
-export default Workspaces
+export default Workspaces;
