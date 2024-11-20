@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../../../../../backend/services/api.js";
 import ErrorDisplay from "../../../components/ErrorDisplay/index.jsx";
+import LogOut from "../../../components/LogOut/index.jsx";
 
 function Workspaces() {
     const [username, setUsername] = useState("");
     const [workspaces, setWorkspaces] = useState([]);
     const [error, setError] = useState(null);
+    const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false); // Estado para controle do modal
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -29,23 +31,21 @@ function Workspaces() {
         fetchUserData();
     }, []);
 
-    const handleLogOut = async () => {
-        try {
-            await api.post("/api/auth/logout");
-            setUsername("");
-            navigate("/");
-        } catch (error) {
-            console.error(
-                "Erro ao fazer logout:",
-                error.response?.data?.message || error.message
-            );
-        }
+    const handleOpenLogoutModal = () => {
+        setIsLogoutModalVisible(true); // Exibe o modal
     };
 
+    const handleCloseLogoutModal = () => {
+        setIsLogoutModalVisible(false); // Fecha o modal
+    };
 
     return (
         <>
             <ErrorDisplay errorMessage={error} />
+            <LogOut
+                isVisible={isLogoutModalVisible}
+                onClose={handleCloseLogoutModal}
+            />
             <div className="flex flex-col bg-gray-100 w-[15%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular">
                 {/* Header */}
                 <div className="flex items-center p-4 border-b border-gray-300">
@@ -73,7 +73,7 @@ function Workspaces() {
                 <div className="mt-auto flex justify-center p-4 border-t border-gray-300">
                     <button
                         type="button"
-                        onClick={handleLogOut}
+                        onClick={handleOpenLogoutModal} // Exibe o modal ao clicar
                         className="flex items-center justify-center bg-gray-100 border border-gray-400 rounded-md p-3 hover:bg-gray-200 transition"
                     >
                         <DoorOpen size={20} className="text-gray-600" />

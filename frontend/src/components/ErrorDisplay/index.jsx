@@ -1,50 +1,34 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function ErrorDisplay({ errorMessage }) {
-    const [isVisible, setIsVisible] = useState(false);
+    const navigate = useNavigate();
 
-    // Verifica mudanças no errorMessage para exibir o modal
-    useEffect(() => {
-        if (errorMessage) {
-            setIsVisible(true);
-        }
-    }, [errorMessage]);
+    if (!errorMessage) return null;
 
-    if (!isVisible || !errorMessage) return null;
+    const handleCloseError = () => {
+        navigate('/home');
+    };
 
     return (
         <>
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50">
-                <div className="relative bg-red-600 text-white p-6 rounded-lg shadow-2xl max-w-md w-full mx-4 text-center animate-fadeIn">
+            <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500/70 backdrop-blur-sm font-neue-machina-plain-regular">
+                <div className="bg-white text-gray-800 p-8 rounded-lg shadow-xl max-w-md w-full mx-4 text-center">
+                    <h2 className="text-2xl font-bold mb-4 font-neue-machina-plain-ultrabold">{errorMessage}</h2>
+                    <p className="mb-6 text-lg">
+                        Você não tem permissão para acessar esta workspace!
+                    </p>
                     <button
-                        className="absolute top-2 right-2 text-white bg-red-800 rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-700 focus:outline-none"
-                        onClick={() => setIsVisible(false)}
+                        className="bg-gray-100 font-medium py-2 px-6 rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                        onClick={handleCloseError}
                     >
-                        ✕
-                    </button>
-                    <h2 className="text-xl font-semibold mb-2">Acesso Negado</h2>
-                    <p>{errorMessage}</p>
-                    <button
-                        className="mt-4 bg-white text-red-600 font-bold py-2 px-4 rounded hover:bg-gray-200 transition-colors"
-                        onClick={() => window.location.reload()}
-                    >
-                        Tentar Novamente
+                        Fechar
                     </button>
                 </div>
             </div>
             <style jsx>{`
-                @keyframes fadeIn {
-                    from {
-                        opacity: 0;
-                        transform: scale(0.9);
-                    }
-                    to {
-                        opacity: 1;
-                        transform: scale(1);
-                    }
-                }
-                .animate-fadeIn {
-                    animation: fadeIn 0.3s ease-out;
+                .backdrop-blur-sm {
+                    backdrop-filter: blur(5px);
                 }
             `}</style>
         </>
