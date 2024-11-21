@@ -85,9 +85,9 @@ const Students = () => {
                     <button
                         type="button"
                         onClick={handleOpenAddStudentModal}
-                        className="flex items-center justify-center bg-gray-100 border border-gray-400 rounded-md p-3 hover:bg-gray-200 transition"
+                        className="flex items-center justify-center bg-gray-100 border border-gray-400 rounded-md p-3 hover:bg-customPink hover:text-white hover:border-white transition"
                     >
-                        Adicionar
+                        <p className="px-5"> Adicionar </p>
                     </button>
                 </div>
             </div>
