@@ -28,13 +28,13 @@ function LogOut({ isVisible, onClose }) {
                 </p>
                 <div className="flex justify-center gap-4">
                     <button
-                        className="g-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                        className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
                         onClick={handleLogOut}
                     >
                         <p className="my-2 mx-12" >Sim</p>
                     </button>
                     <button
-                        className="g-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                        className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
                         onClick={onClose}
                     >
                         <p className="my-2 mx-7">Cancelar</p>

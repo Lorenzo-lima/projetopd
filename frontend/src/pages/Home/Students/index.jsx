@@ -2,52 +2,89 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import api from "../../../../../backend/services/api.js";
 import ErrorDisplay from "../../../components/ErrorDisplay/index.jsx";
+import AddStudent from "../../../components/AddStudent/index.jsx";
+import DeleteStudent from "../../../components/DeleteStudent/index.jsx";
 
 const Students = () => {
     const { workspaceId } = useParams();
     const [students, setStudents] = useState([]);
     const [error, setError] = useState(null);
+    const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
 
+    // Fetch students from the API
     useEffect(() => {
-        api.get(`/api/students/${workspaceId}`)
-            .then((response) => {
+        const fetchStudents = async () => {
+            try {
+                const response = await api.get(`/api/students/${workspaceId}`);
                 setStudents(response.data);
                 setError(null);
-            })
-            .catch((error) => {
-                setError(error.response?.data?.message);
-            });
+            } catch (error) {
+                setError(error.response?.data?.message || "Erro ao carregar alunos.");
+            }
+        };
+
+        fetchStudents();
     }, [workspaceId]);
 
+    const handleOpenAddStudentModal = () => {
+        setIsAddStudentModalVisible(true); // Open modal
+    };
+
+    const handleCloseAddStudentModal = () => {
+        setIsAddStudentModalVisible(false); // Close modal
+    };
+
+    const handleDeleteSuccess = (deletedStudentId) => {
+        // Update the students list locally after a successful delete
+        setStudents((prevStudents) =>
+            prevStudents.filter((student) => student._id !== deletedStudentId)
+        );
+    };
 
     return (
         <>
+            {/* Error display */}
             <ErrorDisplay errorMessage={error} />
-            <div className="flex flex-col bg-gray-100 w-[15%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular">
-                {/* Workspaces */}
+
+            {/* Add student modal */}
+            <AddStudent
+                workspaceId={workspaceId}
+                isVisible={isAddStudentModalVisible}
+                onClose={handleCloseAddStudentModal}
+            />
+
+            {/* Students list */}
+            <div className="flex flex-col bg-gray-100 w-[20%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular">
                 <div className="flex flex-col px-6 mt-6">
-                    <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">Lista de Alunos</h1>
+                    <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">
+                        Lista de Alunos
+                    </h1>
                     <ul className="flex flex-col space-y-3">
                         {students.map((student) => (
                             <li
-                                key={student.id}
-                                className="flex justify-between items-center bg-gray-200 p-3 rounded-md shadow hover:bg-gray-300"
+                                key={student._id} // Use _id if that's the field returned by the API
+                                className="flex justify-between items-center p-3 rounded-md shadow hover:bg-customPink hover:text-white bg-gray-200"
                             >
                                 <Link
-                                    to={`/workspaces/${workspaceId}/students/${student.id}/reports`}
-                                    className="text-lg font-medium text-gray-800 hover:text-customPink"
+                                    to={`home/workspaces/${workspaceId}/students/${student._id}/reports`}
+                                    className="text-lg text-sm hover:text-white"
                                 >
                                     {student.name}
                                 </Link>
-                                <button className="text-red-500 hover:text-red-700">x</button>
+                                <DeleteStudent
+                                    studentId={student._id} // Ensure the correct ID is passed
+                                    onDeleteSuccess={handleDeleteSuccess}
+                                />
                             </li>
                         ))}
                     </ul>
                 </div>
-                {/* Botão adicionar */}
+
+                {/* Add student button */}
                 <div className="mt-auto flex justify-center p-4 border-gray-300">
                     <button
                         type="button"
+                        onClick={handleOpenAddStudentModal}
                         className="flex items-center justify-center bg-gray-100 border border-gray-400 rounded-md p-3 hover:bg-gray-200 transition"
                     >
                         Adicionar

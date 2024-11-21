@@ -60,7 +60,7 @@ function Workspaces() {
                         {workspaces.map((workspace) => (
                             <li
                                 key={workspace._id}
-                                onClick={() => navigate(`home/workspace/${workspace._id}/students`)}
+                                onClick={() => navigate(`/workspace/${workspace._id}/students`)}
                                 className="bg-gray-200 rounded-md py-3 px-4 text-gray-800 text-lg font-medium text-center cursor-pointer hover:bg-customPink hover:text-white transition duration-300"
                             >
                                 {workspace.name}

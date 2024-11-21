@@ -11,7 +11,7 @@ function Home() {
                 className="flex-1 bg-[url('/src/assets/relatorios.png')] bg-cover bg-center bg-no-repeat"
             >
                 <Routes>
-                    <Route path="home/workspace/:workspaceId/students" element={<Students />} />
+                    <Route path="/workspace/:workspaceId/students" element={<Students />} />
                 </Routes>
             </div>
         </div>

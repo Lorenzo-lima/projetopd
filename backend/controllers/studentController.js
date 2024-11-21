@@ -81,22 +81,41 @@ export const updateStudent = async (req, res) => {
 }
 
 export const deleteStudent = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
 
     try {
-        const student = await Student.findById(id)
+        // Busca o aluno pelo ID
+        const student = await Student.findById(id);
 
-        if(!student) {
-            return res.status(404).json({ message: 'Aluno não encontrado' })
+        if (!student) {
+            return res.status(404).json({ message: "Aluno não encontrado" });
         }
 
-        if(req.user.role !== 'admin' && req.user.id !== student.workspace.owner.toString()) {
-            return res.status(403).json({ message: 'Acesso negado' })
+        // Busca o workspace associado ao aluno
+        const workspace = await Workspace.findById(student.workspace);
+
+        if (!workspace) {
+            return res.status(404).json({ message: "Workspace associado não encontrado" });
         }
 
-        await student.remove()
-        res.status(200).json({ message: 'Aluno excluído com sucesso' })
+        // Verifica permissões
+        if (req.user.role !== "admin" && req.user.id !== workspace.owner.toString()) {
+            return res.status(403).json({ message: "Acesso negado" });
+        }
+
+        // Exclui o aluno usando deleteOne
+        await Student.deleteOne({ _id: id });
+
+        // Remove o aluno da lista de alunos no workspace
+        workspace.students = workspace.students.filter(
+            (studentId) => studentId.toString() !== id
+        );
+        await workspace.save();
+
+        res.status(200).json({ message: "Aluno excluído com sucesso" });
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao excluir aluno', error: error.message })
+        res.status(500).json({ message: "Erro ao excluir aluno", error: error.message });
     }
-}
+};
+
+
