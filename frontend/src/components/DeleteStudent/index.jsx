@@ -9,11 +9,10 @@ const DeleteStudent = ({ studentId, onDeleteSuccess }) => {
 
     const handleDeleteStudent = async () => {
         try {
-            // Faz a requisição DELETE para o backend
-            const response = await api.delete(`/api/students/${studentId}`);
-            onDeleteSuccess(studentId); // Atualiza a lista no componente pai
-            setError(null); // Limpa o erro, caso exista
-            setIsConfirmModalVisible(false); // Fecha o modal após sucesso
+            await api.delete(`/api/students/${studentId}`);
+            onDeleteSuccess(studentId);
+            setError(null);
+            setIsConfirmModalVisible(false);
         } catch (error) {
             setError(error.response?.data?.message || "Erro ao excluir aluno");
         }
@@ -29,10 +28,8 @@ const DeleteStudent = ({ studentId, onDeleteSuccess }) => {
 
     return (
         <>
-            {/* Exibição de erro */}
             <ErrorDisplay errorMessage={error} />
 
-            {/* Botão de exclusão */}
             <button
                 onClick={handleOpenConfirmModal}
                 className=""
@@ -41,7 +38,6 @@ const DeleteStudent = ({ studentId, onDeleteSuccess }) => {
                 <SquareX size={18} />
             </button>
 
-            {/* Modal de confirmação */}
             {isConfirmModalVisible && (
                 <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 backdrop-blur-sm text-black">
                     <div className="bg-white p-6 rounded-md shadow-lg w-96 text-center">
@@ -52,7 +48,7 @@ const DeleteStudent = ({ studentId, onDeleteSuccess }) => {
                                 onClick={handleDeleteStudent}
                                 className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
                             >
-                               <p className="my-2 mx-9">Excluir</p>
+                                <p className="my-2 mx-9">Excluir</p>
                             </button>
                             <button
                                 onClick={handleCloseConfirmModal}

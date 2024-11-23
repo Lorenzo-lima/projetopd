@@ -54,31 +54,47 @@ export const getStudentsInWorkspace = async (req, res) => {
 
 
 export const updateStudent = async (req, res) => {
-    const { id } = req.params
-    const { name, email, pdcode } = req.body
+    const { id } = req.params;
+    const { name, email, pdcode } = req.body;
 
     try {
-        const student = await Student.findById(id)
+        // Busca o aluno pelo ID e popula o campo "workspace"
+        const student = await Student.findById(id).populate({
+            path: "workspace",
+            select: "owner", // Busca apenas o campo "owner"
+        });
+        
 
-        if(!student) {
-            return res.status(404).json({ message: 'Aluno não encontrado' })
+        if (!student) {
+            return res.status(404).json({ message: "Aluno não encontrado" });
         }
 
-        if(req.user.role !== 'admin' && req.user.id !== student.workspace.owner.toString()) {
-            return res.status(403).json({ message: 'Acesso negado' })
+        // Verifica se o workspace associado existe
+        const workspace = student.workspace;
+        if (!workspace) {
+            return res.status(404).json({ message: "Workspace associado não encontrado" });
         }
 
-        student.name = name || student.name
-        student.email = email || student.email
-        student.pdcode = pdcode || student.pdcode
+        // Verifica permissões
+        if (req.user.role !== "admin" && req.user.id !== workspace.owner.toString()) {
+            return res.status(403).json({ message: "Você não tem permissão para acessar esta workspace!" });
+        }
 
-        const updatedStudent = await student.save()
+        // Atualiza os campos do aluno
+        student.name = name || student.name;
+        student.email = email || student.email;
+        student.pdcode = pdcode || student.pdcode;
 
-        res.status(200).json(updatedStudent)
-    } catch(error) {
-        res.status(500).json({ message: 'Erro ao atualizar aluno', error: error.message })
+        // Salva o aluno atualizado
+        const updatedStudent = await student.save();
+
+        res.status(200).json(updatedStudent);
+    } catch (error) {
+        res.status(500).json({ message: "Erro ao atualizar aluno", error: error.message });
     }
-}
+};
+
+
 
 export const deleteStudent = async (req, res) => {
     const { id } = req.params;

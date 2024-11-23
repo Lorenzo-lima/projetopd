@@ -4,6 +4,7 @@ import api from "../../../../../backend/services/api.js";
 import ErrorDisplay from "../../../components/ErrorDisplay/index.jsx";
 import AddStudent from "../../../components/AddStudent/index.jsx";
 import DeleteStudent from "../../../components/DeleteStudent/index.jsx";
+import UpdateStudent from "../../../components/UpdateStudent/index.jsx";
 
 const Students = () => {
     const { workspaceId } = useParams();
@@ -62,19 +63,33 @@ const Students = () => {
                     <ul className="flex flex-col space-y-3">
                         {students.map((student) => (
                             <li
-                                key={student._id} // Use _id if that's the field returned by the API
-                                className="flex justify-between items-center p-3 rounded-md shadow hover:bg-customPink hover:text-white bg-gray-200"
+                                key={student._id}
+                                className="flex justify-between items-center p-3 rounded-md shadow hover:bg-customPink hover:text-white bg-gray-200 cursor-pointer"
                             >
                                 <Link
-                                    to={`home/workspaces/${workspaceId}/students/${student._id}/reports`}
+                                    to={`/home/workspaces/${workspaceId}/students/${student._id}/reports`}
                                     className="text-lg text-sm hover:text-white"
                                 >
                                     {student.name}
                                 </Link>
-                                <DeleteStudent
-                                    studentId={student._id} // Ensure the correct ID is passed
-                                    onDeleteSuccess={handleDeleteSuccess}
-                                />
+                                <div className="flex space-x-2">
+                                    <UpdateStudent
+                                        student={student}
+                                        onUpdateSuccess={(updatedStudent) => {
+                                            // Atualiza a lista no componente pai
+                                            setStudents((prevStudents) =>
+                                                prevStudents.map((s) =>
+                                                    s._id === updatedStudent._id ? updatedStudent : s
+                                                )
+                                            );
+                                        }}
+                                    />
+
+                                    <DeleteStudent
+                                        studentId={student._id}
+                                        onDeleteSuccess={handleDeleteSuccess}
+                                    />
+                                </div>
                             </li>
                         ))}
                     </ul>

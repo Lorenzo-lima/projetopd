@@ -12,7 +12,7 @@ function ErrorDisplay({ errorMessage }) {
 
     return (
         <>
-            <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500/70 backdrop-blur-sm font-neue-machina-plain-regular">
+            <div className="fixed inset-0 flex items-center justify-center z-60 bg-gray-500/70 backdrop-blur-sm font-neue-machina-plain-regular">
                 <div className="bg-white text-gray-800 p-8 rounded-lg shadow-xl max-w-md w-full mx-4 text-center">
                     <h2 className="text-2xl font-bold mb-4 font-neue-machina-plain-ultrabold">{errorMessage}</h2>
                     <p className="mb-6 text-lg">
