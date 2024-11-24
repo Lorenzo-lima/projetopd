@@ -54,7 +54,7 @@ function Workspaces() {
                 </div>
 
                 {/* Workspaces */}
-                <div className="flex flex-col px-6 mt-6">
+                <div className="flex flex-col px-6 mt-6 overflow-y-auto">
                     <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">Workspaces</h1>
                     <ul className="space-y-3">
                         {workspaces.map((workspace) => (

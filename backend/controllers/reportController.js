@@ -38,21 +38,36 @@ export const createReport = async (req, res) => {
     }
 }
 
-export const getReportsByStudents = async (req, res) => {
-    const { studentId } = req.params
-
+export const getAllReports = async (req, res) => {
     try {
-        const reports = await Report.find({ student: studentId })
+        const reports = await Report.find().populate('student'); // Inclui informações do estudante referenciado
 
-        if(!reports || !reports.length === 0) {
-            return res.status(404).json({ message: 'Nenhum relatório encontrado para este aluno' })
+        if (!reports || reports.length === 0) {
+            return res.status(404).json({ message: 'Nenhum relatório encontrado' });
         }
 
-        res.status(200).json(reports)
+        res.status(200).json(reports);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao buscar relatórios', error: error.message })
+        res.status(500).json({ message: 'Erro ao buscar relatórios', error: error.message });
     }
-}
+};
+
+export const getReportsByStudents = async (req, res) => {
+    const { studentId } = req.params;
+
+    try {
+        const reports = await Report.find({ student: studentId });
+
+        if (!reports || reports.length === 0) {
+            return res.status(404).json({ message: 'Nenhum relatório encontrado para este aluno' });
+        }
+
+        res.status(200).json(reports);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao buscar relatórios', error: error.message });
+    }
+};
+
 
 export const updateReport = async (req, res) => {
     const { id } = req.params

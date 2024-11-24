@@ -31,7 +31,7 @@ export const getWorkspaceById = async (req, res) => {
         }
 
         if (req.user.role !== 'admin' && req.user.id !== workspace.owner._id.toString()) {
-            return res.status(403).json({ message: 'Acesso negado!' })
+            return res.status(403).json({ message: 'Você não tem permissão para acessar esta Workspace!' })
         }
 
         res.status(200).json(workspace)

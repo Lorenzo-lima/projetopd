@@ -62,16 +62,17 @@ const Students = () => {
                     </h1>
                     <ul className="flex flex-col space-y-3">
                         {students.map((student) => (
+                            <Link
+                            to={`/workspace/${workspaceId}/students/${student._id}/reports`}
+                            className="text-lg text-sm hover:text-white"
+                        >
                             <li
                                 key={student._id}
                                 className="flex justify-between items-center p-3 rounded-md shadow hover:bg-customPink hover:text-white bg-gray-200 cursor-pointer"
                             >
-                                <Link
-                                    to={`/home/workspaces/${workspaceId}/students/${student._id}/reports`}
-                                    className="text-lg text-sm hover:text-white"
-                                >
+                                
                                     {student.name}
-                                </Link>
+                                
                                 <div className="flex space-x-2">
                                     <UpdateStudent
                                         student={student}
@@ -91,6 +92,7 @@ const Students = () => {
                                     />
                                 </div>
                             </li>
+                            </Link>
                         ))}
                     </ul>
                 </div>
