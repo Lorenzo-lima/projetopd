@@ -27,12 +27,12 @@ const Reports = () => {
 
     return (
         <div className="flex flex-col items-center justify-center bg-white rounded-xl w-full h-full font-neue-machina-plain-regular">
-            <div className="w-full max-h-screen overflow-y-auto shadow-md p-4 border custom-scrollbar">
+            <div className="w-full max-h-screen overflow-y-auto p-4 custom-scrollbar">
                 <h1 className="text-3xl font-semibold mb-4 text-center font-neue-machina-plain-ultrabold">Relatórios</h1>
 
-                {/* Exibição de Erros */}
+                {/* Exibição de Erros
                 <ErrorDisplay errorMessage={error} />
-
+                */}
                 {/* Lista de Relatórios */}
                 {reports.length > 0 ? (
                     <ul className="space-y-4 ">
