@@ -35,7 +35,7 @@ function AddStudent({ isVisible, onClose }) {
     };
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-500/70 backdrop-blur-sm font-neue-machina-plain-regular">
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular">
             {/* Exibição de erro */}
             <ErrorDisplay errorMessage={error} />
 

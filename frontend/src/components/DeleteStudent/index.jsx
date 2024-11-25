@@ -39,7 +39,7 @@ const DeleteStudent = ({ studentId, onDeleteSuccess }) => {
             </button>
 
             {isConfirmModalVisible && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/50 backdrop-blur-sm text-black">
+                <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular text-black">
                     <div className="bg-white p-6 rounded-md shadow-lg w-96 text-center">
                         <h2 className="text-lg text-gray-700 font-neue-machina-plain-ultrabold mb-4">Confirmar Exclusão</h2>
                         <p className="text-gray-700 mb-6">Tem certeza que deseja excluir este aluno?</p>

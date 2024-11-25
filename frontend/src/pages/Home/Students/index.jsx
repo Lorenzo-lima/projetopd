@@ -10,7 +10,9 @@ const Students = () => {
     const { workspaceId } = useParams();
     const [students, setStudents] = useState([]);
     const [error, setError] = useState(null);
+    const [additionalMessage, setAdditionalMessage] = useState(null);
     const [isAddStudentModalVisible, setIsAddStudentModalVisible] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false); // Estado para controlar carregamento
 
     // Fetch students from the API
     useEffect(() => {
@@ -19,8 +21,12 @@ const Students = () => {
                 const response = await api.get(`/api/students/${workspaceId}`);
                 setStudents(response.data);
                 setError(null);
+                setAdditionalMessage(null);
             } catch (error) {
                 setError(error.response?.data?.message || "Erro ao carregar alunos.");
+                setAdditionalMessage(error.response?.data?.additionalMessage);
+            } finally {
+                setIsLoaded(true); // Marca como carregado
             }
         };
 
@@ -28,86 +34,95 @@ const Students = () => {
     }, [workspaceId]);
 
     const handleOpenAddStudentModal = () => {
-        setIsAddStudentModalVisible(true); // Open modal
+        setIsAddStudentModalVisible(true);
     };
 
     const handleCloseAddStudentModal = () => {
-        setIsAddStudentModalVisible(false); // Close modal
+        setIsAddStudentModalVisible(false);
     };
 
     const handleDeleteSuccess = (deletedStudentId) => {
-        // Update the students list locally after a successful delete
         setStudents((prevStudents) =>
             prevStudents.filter((student) => student._id !== deletedStudentId)
         );
     };
 
+    // Evita renderizar o conteúdo antes de estar carregado
+    if (!isLoaded) return null;
+
     return (
         <>
-            {/* Error display */}
-            <ErrorDisplay errorMessage={error} />
-
-            {/* Add student modal */}
-            <AddStudent
-                workspaceId={workspaceId}
-                isVisible={isAddStudentModalVisible}
-                onClose={handleCloseAddStudentModal}
-            />
-
-            {/* Students list */}
-            <div className="flex flex-col bg-gray-100 w-[20%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular">
-                <div className="flex flex-col px-6 mt-6">
-                    <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">
-                        Lista de Alunos
-                    </h1>
-                    <ul className="flex flex-col space-y-3">
-                        {students.map((student) => (
-                            <Link
-                            to={`/workspace/${workspaceId}/students/${student._id}/reports`}
-                            className="text-lg text-sm hover:text-white"
+            {/* Exibe apenas o modal de erro se houver erro */}
+            {error ? (
+                <div className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+                    <div className="bg-white rounded-md p-6 text-center shadow-lg">
+                        <ErrorDisplay errorMessage={error} additionalMessage={additionalMessage} />
+                        <button
+                            onClick={() => setError(null)}
+                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mt-4"
                         >
-                            <li
-                                key={student._id}
-                                className="flex justify-between items-center p-3 rounded-md shadow hover:bg-customPink hover:text-white bg-gray-200 cursor-pointer"
-                            >
-                                
-                                    {student.name}
-                                
-                                <div className="flex space-x-2">
-                                    <UpdateStudent
-                                        student={student}
-                                        onUpdateSuccess={(updatedStudent) => {
-                                            // Atualiza a lista no componente pai
-                                            setStudents((prevStudents) =>
-                                                prevStudents.map((s) =>
-                                                    s._id === updatedStudent._id ? updatedStudent : s
-                                                )
-                                            );
-                                        }}
-                                    />
-
-                                    <DeleteStudent
-                                        studentId={student._id}
-                                        onDeleteSuccess={handleDeleteSuccess}
-                                    />
-                                </div>
-                            </li>
-                            </Link>
-                        ))}
-                    </ul>
+                            Fechar
+                        </button>
+                    </div>
                 </div>
+            ) : (
+                <div className="flex flex-col bg-gray-100 w-[20%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular">
+                    <div className="flex flex-col px-6 mt-6">
+                        <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">
+                            Lista de Alunos
+                        </h1>
+                        <ul className="flex flex-col space-y-3">
+                            {students.map((student) => (
+                                <Link
+                                    to={`/workspace/${workspaceId}/students/${student._id}/reports`}
+                                    key={student._id}
+                                    className="text-sm hover:text-white"
+                                >
+                                    <li
+                                        className="flex justify-between items-center p-3 rounded-md shadow hover:bg-customPink hover:text-white bg-gray-200 cursor-pointer"
+                                    >
+                                        {student.name}
+                                        <div className="flex space-x-2">
+                                            <UpdateStudent
+                                                student={student}
+                                                onUpdateSuccess={(updatedStudent) => {
+                                                    setStudents((prevStudents) =>
+                                                        prevStudents.map((s) =>
+                                                            s._id === updatedStudent._id ? updatedStudent : s
+                                                        )
+                                                    );
+                                                }}
+                                            />
+                                            <DeleteStudent
+                                                studentId={student._id}
+                                                onDeleteSuccess={handleDeleteSuccess}
+                                            />
+                                        </div>
+                                    </li>
+                                </Link>
+                            ))}
+                        </ul>
+                    </div>
 
-                {/* Add student button */}
-                <div className="mt-auto flex justify-center p-4 border-gray-300">
-                    <button
-                        type="button"
-                        onClick={handleOpenAddStudentModal}
-                        className="flex items-center justify-center bg-gray-100 border border-gray-400 rounded-md p-3 hover:bg-customPink hover:text-white hover:border-white transition"
-                    >
-                        <p className="px-5"> Adicionar </p>
-                    </button>
+                    {/* Add student button */}
+                    <div className="mt-auto flex justify-center p-4 border-gray-300">
+                        <button
+                            type="button"
+                            onClick={handleOpenAddStudentModal}
+                            className="flex items-center justify-center bg-gray-100 border border-gray-400 rounded-md p-3 hover:bg-customPink hover:text-white hover:border-white transition"
+                        >
+                            <p className="px-5"> Adicionar </p>
+                        </button>
+                    </div>
+
+                    {/* Add student modal */}
+                    <AddStudent
+                        workspaceId={workspaceId}
+                        isVisible={isAddStudentModalVisible}
+                        onClose={handleCloseAddStudentModal}
+                    />
                 </div>
-            </div>
+            )}
         </>
     );
 };

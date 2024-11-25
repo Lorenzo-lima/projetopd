@@ -9,6 +9,7 @@ function Workspaces() {
     const [username, setUsername] = useState("");
     const [workspaces, setWorkspaces] = useState([]);
     const [error, setError] = useState(null);
+    const [additionalMessage, setAdditionalMessage] = useState(null);
     const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false); // Estado para controle do modal
     const navigate = useNavigate();
 
@@ -22,8 +23,10 @@ function Workspaces() {
                 setWorkspaces(workspaceResponse.data);
 
                 setError(null);
+                setAdditionalMessage(null);
             } catch (error) {
                 setError(error.response?.data?.message);
+                setAdditionalMessage(error.response?.data?.additionalMessage);
                 navigate("/");
             }
         };
@@ -41,7 +44,7 @@ function Workspaces() {
 
     return (
         <>
-            <ErrorDisplay errorMessage={error} />
+            <ErrorDisplay errorMessage={error} additionalMessage={additionalMessage} />
             <LogOut
                 isVisible={isLogoutModalVisible}
                 onClose={handleCloseLogoutModal}
@@ -54,7 +57,7 @@ function Workspaces() {
                 </div>
 
                 {/* Workspaces */}
-                <div className="flex flex-col px-6 mt-6 overflow-y-auto">
+                <div className="flex flex-col px-6 mt-6 overflow-y-auto custom-scrollbar">
                     <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">Workspaces</h1>
                     <ul className="space-y-3">
                         {workspaces.map((workspace) => (
