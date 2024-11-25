@@ -70,52 +70,66 @@ export const getReportsByStudents = async (req, res) => {
 
 
 export const updateReport = async (req, res) => {
-    const { id } = req.params
-    const { presenceStatus, appointmentTime, resume, strategies, observations } = req.body
+    const { id } = req.params;
+    const { presenceStatus, appointmentTime, resume, strategies, observations } = req.body;
 
     try {
+        // Buscar o relatório com dados relacionados
         const report = await Report.findById(id)
+            .populate({
+                path: 'student',
+                populate: {
+                    path: 'workspace',
+                    select: 'owner', // Apenas carrega o dono do workspace
+                },
+            });
 
-        if(!report) {
-            return res.status(404).json({ message: 'Relatório não encontrado' })
+        if (!report) {
+            return res.status(404).json({ message: 'Relatório não encontrado' });
         }
 
-        if(req.user.role !== 'admin' && req.user.id !== report.student.workspace.owner.toString()) {
-            return res.status(403).json({ message: 'Acesso negado' })
+        // Verifica permissões
+        if (
+            req.user.role !== 'admin' &&
+            (!report.student || !report.student.workspace || req.user.id !== report.student.workspace.owner.toString())
+        ) {
+            return res.status(403).json({ message: 'Acesso negado' });
         }
 
-        report.presenceStatus = presenceStatus || report.presenceStatus
-        report.appointmentTime = appointmentTime || report.appointmentTime
-        report.resume = resume || report.resume
-        report.strategies = strategies || report.strategies
-        report.observations = observations || report.observations
+        // Atualiza os dados do relatório
+        report.presenceStatus = presenceStatus || undefined;
+        report.appointmentTime = appointmentTime || undefined;
+        report.resume = resume || undefined;
+        report.strategies = strategies || undefined;
+        report.observations = observations || undefined;
 
-        const updatedReport = await report.save()
+        const updatedReport = await report.save();
 
-        res.status(200).json(updatedReport)
+        res.status(200).json(updatedReport);
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao atualizar relatório', error: error.message })
+        console.error('Erro ao atualizar relatório:', error);
+        res.status(500).json({ message: 'Erro ao atualizar relatório', error: error.message });
     }
-}
+};
+
 
 export const deleteReport = async (req, res) => {
-    const { id } = req.params
+    const { id } = req.params;
 
     try {
-        const report = await Report.findById(id)
+        const report = await Report.findByIdAndDelete(id); // Substitui findById e remove
 
-        if(!report) {
-            return res.status(404).json({ message: 'Relatório não encontrado' })
+        if (!report) {
+            return res.status(404).json({ message: "Relatório não encontrado" });
         }
 
-        if(req.user.role !== 'admin' && req.user.id !== report.student.workspace.owner.toString()) {
-            return res.status(403).json({ message: 'Acesso negado' })
-        }
-
-        await report.remove()
-
-        res.status(200).json({ message: 'Relatório excluído com sucesso' })
+        res.status(200).json({ message: "Relatório excluído com sucesso" });
     } catch (error) {
-        res.status(500).json({ message: 'Erro ao excluir relatório', error: error.message })
+        res.status(500).json({ message: "Erro ao excluir relatório", error: error.message });
     }
-}
+};
+
+
+
+
+

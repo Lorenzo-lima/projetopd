@@ -7,7 +7,7 @@ const ReportSchema = new mongoose.Schema({
     resume: { type: String, required: true },
     strategies: { type: String },
     observations: { type: String },
-    student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student' },
+    student: { type: mongoose.Schema.Types.ObjectId, ref: 'Student'},
 }, {
     timestamps: true,
     collection: 'reports',

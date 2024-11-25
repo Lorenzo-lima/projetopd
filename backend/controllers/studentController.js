@@ -17,7 +17,7 @@ export const createStudent = async (req, res) => {
         }
 
         if(req.user.role !== 'admin' && req.user.id !== workspace.owner.toString()) {
-            return res.status(403).json({ message: 'Acesso negado' })
+            return res.status(403).json({ message: 'Acesso negado', additionalMessage: 'Você não tem permissão para acessar esta Workspace!Você não tem permissão para acessar esta Workspace!' })
         }
 
         const newStudent = new Student({ name, email, pdcode, workspace: workspaceId })
@@ -43,7 +43,7 @@ export const getStudentsInWorkspace = async (req, res) => {
         }
 
         if(req.user.role !== 'admin' && req.user.id !== workspace.owner.toString()) {
-            return res.status(403).json({ message: 'Acesso negado' })
+            return res.status(403).json({ message: 'Acesso negado', additionalMessage: 'Você não tem permissão para acessar esta Workspace!' })
         }
 
         res.status(200).json(workspace.students)
@@ -77,7 +77,7 @@ export const updateStudent = async (req, res) => {
 
         // Verifica permissões
         if (req.user.role !== "admin" && req.user.id !== workspace.owner.toString()) {
-            return res.status(403).json({ message: "Você não tem permissão para acessar esta workspace!" });
+            return res.status(403).json({ message: 'Acesso negado', additionalMessage: 'Você não tem permissão para acessar esta Workspace!Você não tem permissão para acessar esta Workspace!' })
         }
 
         // Atualiza os campos do aluno
@@ -100,29 +100,30 @@ export const deleteStudent = async (req, res) => {
     const { id } = req.params;
 
     try {
-        // Busca o aluno pelo ID
-        const student = await Student.findById(id);
-
+        // Busca e valida o aluno
+        const student = await Student.findById(id).populate("workspace", "owner students");
         if (!student) {
             return res.status(404).json({ message: "Aluno não encontrado" });
         }
 
-        // Busca o workspace associado ao aluno
-        const workspace = await Workspace.findById(student.workspace);
+        const workspace = student.workspace;
 
+        // Valida o workspace e permissões
         if (!workspace) {
             return res.status(404).json({ message: "Workspace associado não encontrado" });
         }
 
-        // Verifica permissões
         if (req.user.role !== "admin" && req.user.id !== workspace.owner.toString()) {
-            return res.status(403).json({ message: "Acesso negado" });
+            return res.status(403).json({
+                message: "Acesso negado",
+                additionalMessage: "Você não tem permissão para acessar esta Workspace!"
+            });
         }
 
-        // Exclui o aluno usando deleteOne
-        await Student.deleteOne({ _id: id });
+        // Exclui o aluno
+        await Student.findByIdAndDelete(id);
 
-        // Remove o aluno da lista de alunos no workspace
+        // Remove o aluno do workspace
         workspace.students = workspace.students.filter(
             (studentId) => studentId.toString() !== id
         );
@@ -133,5 +134,6 @@ export const deleteStudent = async (req, res) => {
         res.status(500).json({ message: "Erro ao excluir aluno", error: error.message });
     }
 };
+
 
 
