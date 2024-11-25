@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import api from "../../../../backend/services/api.js";
 import ErrorDisplay from "../ErrorDisplay/index.jsx";
 
@@ -35,7 +36,6 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
 
     const handleUpdateReport = async () => {
         try {
-            // Verifica campos obrigatórios
             const requiredFields = ["presenceStatus", "appointmentTime", "resume"];
             const errors = {};
 
@@ -50,7 +50,6 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
                 return;
             }
 
-            // Filtra os campos vazios
             const filteredData = Object.fromEntries(
                 Object.entries(formData).filter(([_, value]) => value && value.trim() !== "")
             );
@@ -70,9 +69,21 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
     if (!isVisible) return null;
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular">
+        <motion.div
+            className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
             <ErrorDisplay errorMessage={error} />
-            <div className="bg-white p-6 rounded-md shadow-lg min-w-[40%] text-center">
+            <motion.div
+                className="bg-white p-6 rounded-md shadow-lg min-w-[40%] text-center"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
                 <h2 className="text-lg text-gray-700 font-neue-machina-plain-ultrabold mb-4">
                     Atualizar Relatório
                 </h2>
@@ -216,8 +227,8 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 

@@ -1,6 +1,7 @@
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { User, DoorOpen } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import api from "../../../../../backend/services/api.js";
 import ErrorDisplay from "../../../components/ErrorDisplay/index.jsx";
 import LogOut from "../../../components/LogOut/index.jsx";
@@ -8,10 +9,12 @@ import LogOut from "../../../components/LogOut/index.jsx";
 function Workspaces() {
     const [username, setUsername] = useState("");
     const [workspaces, setWorkspaces] = useState([]);
+    const [selectedWorkspace, setSelectedWorkspace] = useState(null);
     const [error, setError] = useState(null);
     const [additionalMessage, setAdditionalMessage] = useState(null);
-    const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false); // Estado para controle do modal
+    const [isLogoutModalVisible, setIsLogoutModalVisible] = useState(false);
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -34,55 +37,76 @@ function Workspaces() {
         fetchUserData();
     }, []);
 
+    useEffect(() => {
+        const currentWorkspaceId = location.pathname.split("/")[2];
+        setSelectedWorkspace(currentWorkspaceId);
+    }, [location.pathname]);
+
+    const handleWorkspaceClick = (workspaceId) => {
+        setSelectedWorkspace(workspaceId);
+        navigate(`/workspace/${workspaceId}/students`);
+    };
+
     const handleOpenLogoutModal = () => {
-        setIsLogoutModalVisible(true); // Exibe o modal
+        setIsLogoutModalVisible(true);
     };
 
     const handleCloseLogoutModal = () => {
-        setIsLogoutModalVisible(false); // Fecha o modal
+        setIsLogoutModalVisible(false);
     };
 
     return (
         <>
             <ErrorDisplay errorMessage={error} additionalMessage={additionalMessage} />
-            <LogOut
-                isVisible={isLogoutModalVisible}
-                onClose={handleCloseLogoutModal}
-            />
-            <div className="flex flex-col bg-gray-100 w-[15%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular">
-                {/* Header */}
-                <div className="flex items-center p-4 border-b border-gray-300">
-                    <User size={26} className="mr-2 text-gray-600" />
-                    <p className="text-gray-800 font-semibold text-lg mt-3">{username}</p>
+            <LogOut isVisible={isLogoutModalVisible} onClose={handleCloseLogoutModal} />
+
+            <motion.div
+                initial={{ x: -100, opacity: 0 }}
+                animate={{ x: 0, opacity: 1 }}
+                exit={{ x: -100, opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="flex flex-col h-full bg-gray-100 w-[15%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular"
+            >
+                <div className="flex items-center justify-between p-4 border-b border-gray-300 mr-1">
+                    <User size={26} className="text-gray-600" />
+                    <p className="text-gray-800 font-neue-machina-plain-ultrabold text-lg mt-3 mr-20">{username}</p>
                 </div>
 
-                {/* Workspaces */}
-                <div className="flex flex-col px-6 mt-6 overflow-y-auto custom-scrollbar">
-                    <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">Workspaces</h1>
+                <div className="flex-1 flex flex-col px-6 mt-6 overflow-x-auto custom-scrollbar h-screen">
+                    <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">
+                        Workspaces
+                    </h1>
                     <ul className="space-y-3">
                         {workspaces.map((workspace) => (
-                            <li
+                            <motion.li
                                 key={workspace._id}
-                                onClick={() => navigate(`/workspace/${workspace._id}/students`)}
-                                className="bg-gray-200 rounded-md py-3 px-4 text-gray-800 text-lg font-medium text-center cursor-pointer hover:bg-customPink hover:text-white transition duration-300"
+                                onClick={() => handleWorkspaceClick(workspace._id)}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                className={`rounded-md py-3 px-4 text-lg font-medium text-center cursor-pointer transition duration-300 ${
+                                    selectedWorkspace === workspace._id
+                                        ? "bg-customPink text-white"
+                                        : "bg-gray-200 text-gray-800 hover:bg-customPink hover:text-white"
+                                }`}
                             >
                                 {workspace.name}
-                            </li>
+                            </motion.li>
                         ))}
                     </ul>
                 </div>
 
-                {/* Footer */}
-                <div className="mt-auto flex justify-center p-4 border-t border-gray-300">
-                    <button
+                <div className="flex items-center justify-center p-4 border-t border-gray-300">
+                    <motion.button
                         type="button"
-                        onClick={handleOpenLogoutModal} // Exibe o modal ao clicar
+                        onClick={handleOpenLogoutModal}
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
                         className="flex items-center justify-center bg-gray-100 border border-gray-400 rounded-md p-3 hover:bg-gray-200 transition"
                     >
-                        <DoorOpen size={20} className="text-gray-600" />
-                    </button>
+                        <DoorOpen size={20} className="text-gray-600 my-0.5" />
+                    </motion.button>
                 </div>
-            </div>
+            </motion.div>
         </>
     );
 }

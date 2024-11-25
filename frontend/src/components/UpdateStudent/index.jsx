@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { SquarePen } from "lucide-react";
 import api from "../../../../backend/services/api.js";
 import ErrorDisplay from "../ErrorDisplay/index.jsx";
@@ -47,11 +48,23 @@ const UpdateStudent = ({ student, onUpdateSuccess }) => {
                 <SquarePen size={16} className="" />
             </button>
 
-            {/* Modal de atualização */}
+            {/* Modal de atualização com animação */}
             {isUpdateModalVisible && (
-                <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular text-black">
+                <motion.div
+                    className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular text-black"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                >
                     <ErrorDisplay errorMessage={error} />
-                    <div className="bg-white p-6 rounded-md shadow-lg w-96 text-center">
+                    <motion.div
+                        className="bg-white p-6 rounded-md shadow-lg w-96 text-center"
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.8, opacity: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
                         <h2 className="text-lg text-gray-700 font-neue-machina-plain-ultrabold mb-4">
                             Atualizar Aluno
                         </h2>
@@ -118,8 +131,8 @@ const UpdateStudent = ({ student, onUpdateSuccess }) => {
                                 <p className="my-2 mx-7">Cancelar</p>
                             </button>
                         </div>
-                    </div>
-                </div>
+                    </motion.div>
+                </motion.div>
             )}
         </div>
     );

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import api from "../../../../backend/services/api";
 import ErrorDisplay from "../ErrorDisplay";
 
@@ -12,16 +13,12 @@ function AddStudent({ isVisible, onClose }) {
         pdcode: "", // Corrigido para corresponder ao backend (minúsculo)
     });
 
-    // Não renderiza o modal se não for visível
-    if (!isVisible) return null;
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
-         // Previne o comportamento padrão do formulário
         try {
             // Certifica-se de enviar os dados corretos para o backend
             await api.post(`/api/students/${workspaceId}`, formData);
@@ -34,13 +31,24 @@ function AddStudent({ isVisible, onClose }) {
         }
     };
 
+    if (!isVisible) return null; // Não renderiza o modal se não for visível
+
     return (
         <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular">
-            {/* Exibição de erro */}
-            <ErrorDisplay errorMessage={error} />
+            <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 50 }}
+                transition={{ duration: 0.3 }}
+                className="bg-white shadow-xl rounded-lg p-8 w-full max-w-md font-neue-machina-plain-regular"
+            >
+                {/* Exibição de erro */}
+                <ErrorDisplay errorMessage={error} />
 
-            <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-md">
-                <h1 className="text-xl font-bold mb-6 text-center font-neue-machina-plain-ultrabold">Adicionar Aluno</h1>
+                <h1 className="text-xl font-bold mb-6 text-center font-neue-machina-plain-ultrabold">
+                    Adicionar Aluno
+                </h1>
+
                 <form onSubmit={handleSubmit} className="space-y-4">
                     {/* Nome */}
                     <div>
@@ -82,7 +90,7 @@ function AddStudent({ isVisible, onClose }) {
                         <input
                             type="text"
                             id="pdcode"
-                            name="pdcode" // Corrigido para corresponder ao backend (minúsculo)
+                            name="pdcode"
                             value={formData.pdcode}
                             onChange={handleInputChange}
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
@@ -96,7 +104,7 @@ function AddStudent({ isVisible, onClose }) {
                             type="submit"
                             className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
                         >
-                             <p className="my-2 mx-7">Adicionar</p>
+                            <p className="my-2 mx-7">Adicionar</p>
                         </button>
                         <button
                             type="button"
@@ -107,7 +115,7 @@ function AddStudent({ isVisible, onClose }) {
                         </button>
                     </div>
                 </form>
-            </div>
+            </motion.div>
         </div>
     );
 }

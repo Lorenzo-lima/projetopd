@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import api from "../../../../backend/services/api.js";
 import ErrorDisplay from "../ErrorDisplay/index.jsx";
 
@@ -20,11 +21,27 @@ const DeleteReport = ({ reportId, onDeleteSuccess, isVisible, onClose }) => {
     if (!isVisible) return null;
 
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular">
+        <motion.div
+            className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
             <ErrorDisplay errorMessage={error} />
-            <div className="flex flex-col bg-white border-2 items-center shadow-xl rounded-lg p-8 w-full max-w-lg">
-                <h2 className="text-lg text-gray-700 font-neue-machina-plain-ultrabold mb-4">Confirmar Exclusão</h2>
-                <p className="text-gray-700 mb-6">Tem certeza que deseja excluir este relatório?</p>
+            <motion.div
+                className="flex flex-col bg-white border-2 items-center shadow-xl rounded-lg p-8 w-full max-w-lg"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
+                <h2 className="text-lg text-gray-700 font-neue-machina-plain-ultrabold mb-4">
+                    Confirmar Exclusão
+                </h2>
+                <p className="text-gray-700 mb-6">
+                    Tem certeza que deseja excluir este relatório?
+                </p>
                 <div className="flex justify-around mx-auto">
                     <button
                         onClick={handleDeleteReport}
@@ -39,8 +56,8 @@ const DeleteReport = ({ reportId, onDeleteSuccess, isVisible, onClose }) => {
                         <p className="my-2 mx-7">Cancelar</p>
                     </button>
                 </div>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 };
 

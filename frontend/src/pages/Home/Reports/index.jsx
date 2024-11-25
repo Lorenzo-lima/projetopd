@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import api from "../../../../../backend/services/api.js";
 import ErrorDisplay from "../../../components/ErrorDisplay/index.jsx";
 import AddReport from "../../../components/AddReport/index.jsx";
@@ -84,7 +85,13 @@ const Reports = () => {
     if (!isLoaded) return null;
 
     return (
-        <div className="flex flex-col items-center bg-white w-full h-screen font-neue-machina-plain-light">
+        <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="flex flex-col items-center bg-white w-full h-screen font-neue-machina-plain-light"
+        >
             <div className="flex flex-col w-full h-full overflow-y-auto p-4 custom-scrollbar">
                 <ErrorDisplay errorMessage={error} />
 
@@ -109,8 +116,12 @@ const Reports = () => {
                             Relatórios
                         </h1>
                         {reports.map((report) => (
-                            <li
+                            <motion.li
                                 key={report._id}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.95 }}
+                                transition={{ duration: 0.3 }}
                                 className="border rounded-lg border-black border-solid bg-gray-100"
                             >
                                 <div className="flex justify-center items-center p-2 relative">
@@ -179,7 +190,7 @@ const Reports = () => {
                                         </p>
                                     )}
                                 </div>
-                            </li>
+                            </motion.li>
                         ))}
                         <button
                             type="button"
@@ -190,7 +201,13 @@ const Reports = () => {
                         </button>
                     </ul>
                 ) : (
-                    <div className="flex flex-col h-full justify-center items-center">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 20 }}
+                        transition={{ duration: 0.4 }}
+                        className="flex flex-col h-full justify-center items-center"
+                    >
                         <h1 className="text-3xl font-semibold mb-4 text-center font-neue-machina-plain-ultrabold">
                             Relatórios
                         </h1>
@@ -204,7 +221,7 @@ const Reports = () => {
                         >
                             <p className="flex px-2 items-center justify-center">Adicionar</p>
                         </button>
-                    </div>
+                    </motion.div>
                 )}
 
                 {isDeleteModalVisible && (
@@ -216,7 +233,7 @@ const Reports = () => {
                     />
                 )}
             </div>
-        </div>
+        </motion.div>
     );
 };
 

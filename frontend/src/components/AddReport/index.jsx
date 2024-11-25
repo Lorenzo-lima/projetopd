@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { motion } from "framer-motion";
 import api from "../../../../backend/services/api";
 import ErrorDisplay from "../ErrorDisplay";
 
@@ -15,16 +16,12 @@ function AddReport({ isVisible, onClose }) {
         observations: "", // Observações (opcional)
     });
 
-    // Não renderiza o modal se não for visível
-    if (!isVisible) return null;
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
     const handleSubmit = async (e) => {
-
         try {
             // Envia os dados para o backend
             await api.post(`/api/reports/${studentId}`, formData);
@@ -44,12 +41,26 @@ function AddReport({ isVisible, onClose }) {
         }
     };
 
+    // Não renderiza o modal se não for visível
+    if (!isVisible) return null;
+
     return (
-        <div className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular">
+        <motion.div
+            className="fixed inset-0 flex items-center justify-center z-50 bg-gray-200/70 backdrop-blur-sm font-neue-machina-plain-regular"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+        >
             {/* Exibição de erro */}
             <ErrorDisplay errorMessage={error} />
 
-            <div className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg">
+            <motion.div
+                className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 0.8, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+            >
                 <h1 className="text-xl font-bold mb-6 text-center font-neue-machina-plain-ultrabold">
                     Adicionar Relatório
                 </h1>
@@ -165,8 +176,8 @@ function AddReport({ isVisible, onClose }) {
                         </button>
                     </div>
                 </form>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     );
 }
 
