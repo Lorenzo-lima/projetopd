@@ -55,13 +55,13 @@ function AddReport({ isVisible, onClose }) {
             <ErrorDisplay errorMessage={error} />
 
             <motion.div
-                className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg"
+                className="bg-white shadow-xl rounded-lg p-8 w-full max-w-lg m-2"
                 initial={{ scale: 0.8, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
             >
-                <h1 className="text-xl font-bold mb-6 text-center font-neue-machina-plain-ultrabold">
+                <h1 className="text-xl font-bold mb-4 text-center font-neue-machina-plain-ultrabold">
                     Adicionar Relatório
                 </h1>
                 <form onSubmit={handleSubmit} className="space-y-4">
@@ -160,20 +160,26 @@ function AddReport({ isVisible, onClose }) {
                         />
                     </div>
                     {/* Botões */}
-                    <div className="flex justify-between pt-3">
-                        <button
-                            type="submit"
-                            className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
-                        >
-                            <p className="my-2 mx-7">Adicionar</p>
-                        </button>
-                        <button
+                    <div className="flex justify-between pt-2">
+                        <motion.button
                             type="button"
                             onClick={onClose} // Fecha o modal
-                            className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                            className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-gray-200"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
                         >
                             <p className="my-2 mx-7">Cancelar</p>
-                        </button>
+                        </motion.button>
+                        <motion.button
+                            type="submit"
+                            className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-customPurple hover:text-white"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <p className="my-2 mx-7">Adicionar</p>
+                        </motion.button>
                     </div>
                 </form>
             </motion.div>

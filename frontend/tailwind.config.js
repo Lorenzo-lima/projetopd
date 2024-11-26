@@ -10,7 +10,8 @@ export default {
         customPink: '#C820A7', // Cor personalizada para o botão
         customPinkTwo: '#A01A86',
         customBg: '#F2F2F2', // Cor personalizada pro background
-        customBgGrey: '#B1B1B1' // Cor personalizada pro background workspace
+        customBgGrey: '#B1B1B1', // Cor personalizada pro background workspace
+        customPurple: '#a343e4'
       },
       fontFamily: {
         'neue-machina-inktrap-light': ['PP Neue Machina Inktrap Light', 'sans-serif'],

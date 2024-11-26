@@ -43,18 +43,24 @@ const DeleteReport = ({ reportId, onDeleteSuccess, isVisible, onClose }) => {
                     Tem certeza que deseja excluir este relatório?
                 </p>
                 <div className="flex justify-around mx-auto">
-                    <button
+                    <motion.button
                         onClick={handleDeleteReport}
-                        className="bg-gray-100 mr-4 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                        className="bg-gray-100 mr-4 font-medium rounded-md border border-gray-400 hover:bg-customPurple hover:text-white hover:border-white"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.3 }}
                     >
                         <p className="my-2 mx-9">Excluir</p>
-                    </button>
-                    <button
+                    </motion.button>
+                    <motion.button
                         onClick={onClose}
-                        className="bg-gray-100 ml-4 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                        className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-gray-200"
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.3 }}
                     >
                         <p className="my-2 mx-7">Cancelar</p>
-                    </button>
+                    </motion.button>
                 </div>
             </motion.div>
         </motion.div>

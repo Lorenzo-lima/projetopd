@@ -100,19 +100,25 @@ function AddStudent({ isVisible, onClose }) {
                     </div>
                     {/* Botões */}
                     <div className="flex justify-between pt-3">
-                        <button
-                            type="submit"
-                            className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
-                        >
-                            <p className="my-2 mx-7">Adicionar</p>
-                        </button>
-                        <button
+                    <motion.button
                             type="button"
                             onClick={onClose} // Fecha o modal
-                            className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                            className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-gray-200"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
                         >
                             <p className="my-2 mx-7">Cancelar</p>
-                        </button>
+                        </motion.button>
+                        <motion.button
+                            type="submit"
+                            className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-customPurple hover:text-white"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
+                        >
+                            <p className="my-2 mx-7">Adicionar</p>
+                        </motion.button>
                     </div>
                 </form>
             </motion.div>

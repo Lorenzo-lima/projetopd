@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import api from '../../../../backend/services/api.js';
 
 function LogOut({ isVisible, onClose }) {
@@ -27,18 +28,24 @@ function LogOut({ isVisible, onClose }) {
                     Você está prestes a sair da sua conta. Tem certeza que deseja continuar?
                 </p>
                 <div className="flex justify-center gap-4">
-                    <button
-                        className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
-                        onClick={handleLogOut}
-                    >
-                        <p className="my-2 mx-12" >Sim</p>
-                    </button>
-                    <button
-                        className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                    <motion.button
+                        className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-gray-200"
                         onClick={onClose}
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.3 }}
                     >
                         <p className="my-2 mx-7">Cancelar</p>
-                    </button>
+                    </motion.button>
+                    <motion.button
+                        className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-customPurple hover:text-white"
+                        onClick={handleLogOut}
+                        whileHover={{ scale: 1.03 }}
+                        whileTap={{ scale: 0.95 }}
+                        transition={{ duration: 0.3 }}
+                    >
+                        <p className="my-2 mx-12">Sim</p>
+                    </motion.button>
                 </div>
             </div>
         </div>

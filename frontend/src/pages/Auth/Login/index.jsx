@@ -69,7 +69,7 @@ function Login() {
                         </label>
                         <button
                             type="submit"
-                            className="select-none font-neue-machina-plain-regular w-full py-3 bg-customPink text-white rounded-md font-semibold hover:bg-pink-700 transition duration-300"
+                            className="select-none font-neue-machina-plain-regular w-full py-3 bg-customPink text-white rounded-md font-semibold hover:bg-customPinkTwo transition duration-300"
                         >
                             Entrar
                         </button>

@@ -100,9 +100,8 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
                             name="date"
                             value={formData.date}
                             onChange={handleInputChange}
-                            className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink ${
-                                fieldErrors.date ? "border-red-500" : "border-gray-400"
-                            }`}
+                            className={`w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink ${fieldErrors.date ? "border-red-500" : "border-gray-400"
+                                }`}
                         />
                         {fieldErrors.date && <p className="text-red-500 text-sm mt-1">{fieldErrors.date}</p>}
                     </div>
@@ -120,9 +119,8 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
                             name="presenceStatus"
                             value={formData.presenceStatus}
                             onChange={handleInputChange}
-                            className={`border rounded-md p-2 w-full ${
-                                fieldErrors.presenceStatus ? "border-red-500" : "border-gray-400"
-                            }`}
+                            className={`border rounded-md p-2 w-full ${fieldErrors.presenceStatus ? "border-red-500" : "border-gray-400"
+                                }`}
                         >
                             <option value="Presente">Presente</option>
                             <option value="Ausente">Ausente</option>
@@ -147,9 +145,8 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
                             name="appointmentTime"
                             value={formData.appointmentTime}
                             onChange={handleInputChange}
-                            className={`border rounded-md p-2 w-full ${
-                                fieldErrors.appointmentTime ? "border-red-500" : "border-gray-400"
-                            }`}
+                            className={`border rounded-md p-2 w-full ${fieldErrors.appointmentTime ? "border-red-500" : "border-gray-400"
+                                }`}
                         />
                         {fieldErrors.appointmentTime && (
                             <p className="text-red-500 text-sm mt-1">{fieldErrors.appointmentTime}</p>
@@ -166,9 +163,8 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
                             name="resume"
                             value={formData.resume}
                             onChange={handleInputChange}
-                            className={`border rounded-md p-2 w-full ${
-                                fieldErrors.resume ? "border-red-500" : "border-gray-400"
-                            }`}
+                            className={`border rounded-md p-2 w-full ${fieldErrors.resume ? "border-red-500" : "border-gray-400"
+                                }`}
                             rows="3"
                             placeholder="Resumo do atendimento"
                         />
@@ -213,17 +209,17 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
                     <div className="flex justify-around">
                         <button
                             type="button"
-                            onClick={handleUpdateReport}
-                            className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
-                        >
-                            <p className="my-2 mx-9">Salvar</p>
-                        </button>
-                        <button
-                            type="button"
                             onClick={onClose}
                             className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
                         >
                             <p className="my-2 mx-7">Cancelar</p>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={handleUpdateReport}
+                            className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                        >
+                            <p className="my-2 mx-9">Salvar</p>
                         </button>
                     </div>
                 </form>
