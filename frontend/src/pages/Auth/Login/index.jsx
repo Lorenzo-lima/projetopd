@@ -36,7 +36,7 @@ function Login() {
                 <Header />
             </div>
             <div className="flex items-center justify-center min-h-screen bg-gray-100" style={{fontFamily: ""}}>
-                <div className="bg-white p-8 rounded-lg shadow-lg w-96">
+                <div className="bg-white p-8 rounded-lg shadow-lg w-96 relative">
                     <img src={logo} alt="logo" className="w-20 mx-auto mb-6 select-none" />
                     
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -62,7 +62,7 @@ function Login() {
                             <button
                                 type="button"
                                 onClick={handlePassword}
-                                className="">
+                                className="absolute right-12">
                                     {isShow && <Eye size={20}/>}
                                     {!isShow && <EyeClosed size={20}/>}
                             </button>

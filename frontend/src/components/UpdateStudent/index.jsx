@@ -118,18 +118,18 @@ const UpdateStudent = ({ student, onUpdateSuccess }) => {
                         </div>
 
                         <div className="flex justify-around">
-                            <button
-                                onClick={handleUpdateStudent}
-                                className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
-                            >
-                                <p className="my-2 mx-9">Salvar</p>
-                            </button>
-                            <button
+                        <motion.button
                                 onClick={handleCloseUpdateModal}
-                                className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                                className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-gray-200"
                             >
                                 <p className="my-2 mx-7">Cancelar</p>
-                            </button>
+                            </motion.button>
+                            <motion.button
+                                onClick={handleUpdateStudent}
+                                className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-customPurple hover:text-white"
+                            >
+                                <p className="my-2 mx-9">Salvar</p>
+                            </motion.button>
                         </div>
                     </motion.div>
                 </motion.div>

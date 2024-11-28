@@ -207,20 +207,26 @@ const UpdateReport = ({ report, onUpdateSuccess, isVisible, onClose }) => {
 
                     {/* Botões */}
                     <div className="flex justify-around">
-                        <button
+                        <motion.button
                             type="button"
                             onClick={onClose}
-                            className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                            className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-gray-200"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
                         >
                             <p className="my-2 mx-7">Cancelar</p>
-                        </button>
-                        <button
+                        </motion.button>
+                        <motion.button
                             type="button"
                             onClick={handleUpdateReport}
-                            className="bg-gray-100 font-medium rounded-md hover:bg-customPink border border-gray-400 hover:text-white hover:border-white"
+                            className="bg-gray-100 font-medium rounded-md border border-gray-400 hover:bg-customPurple hover:text-white"
+                            whileHover={{ scale: 1.03 }}
+                            whileTap={{ scale: 0.95 }}
+                            transition={{ duration: 0.2 }}
                         >
                             <p className="my-2 mx-9">Salvar</p>
-                        </button>
+                        </motion.button>
                     </div>
                 </form>
             </motion.div>
