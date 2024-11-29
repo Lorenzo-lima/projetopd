@@ -10,6 +10,7 @@ logs/
 logs/*
 
 # Arquivos de ambiente
+backend/.env
 .env
 .env.local
 .env.*.local

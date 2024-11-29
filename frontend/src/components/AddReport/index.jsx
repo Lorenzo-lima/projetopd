@@ -76,6 +76,7 @@ function AddReport({ isVisible, onClose }) {
                             name="date"
                             value={formData.date}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             required
                         />
@@ -90,6 +91,7 @@ function AddReport({ isVisible, onClose }) {
                             name="presenceStatus"
                             value={formData.presenceStatus}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             required
                         >
@@ -109,6 +111,7 @@ function AddReport({ isVisible, onClose }) {
                             name="appointmentTime"
                             value={formData.appointmentTime}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             required
                         />
@@ -123,6 +126,7 @@ function AddReport({ isVisible, onClose }) {
                             name="resume"
                             value={formData.resume}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             rows="3"
                             placeholder="Descreva brevemente o atendimento"
@@ -139,6 +143,7 @@ function AddReport({ isVisible, onClose }) {
                             name="strategies"
                             value={formData.strategies}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             rows="2"
                             placeholder="Descreva estratégias aplicadas"
@@ -154,6 +159,7 @@ function AddReport({ isVisible, onClose }) {
                             name="observations"
                             value={formData.observations}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             rows="2"
                             placeholder="Adicione observações, se necessário"

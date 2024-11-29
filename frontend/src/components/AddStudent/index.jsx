@@ -61,6 +61,7 @@ function AddStudent({ isVisible, onClose }) {
                             name="name"
                             value={formData.name}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             placeholder="Digite o nome"
                             required
@@ -77,6 +78,7 @@ function AddStudent({ isVisible, onClose }) {
                             name="email"
                             value={formData.email}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             placeholder="Digite o e-mail"
                             required
@@ -93,6 +95,7 @@ function AddStudent({ isVisible, onClose }) {
                             name="pdcode"
                             value={formData.pdcode}
                             onChange={handleInputChange}
+                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             placeholder="Digite o número de matrícula"
                             required
