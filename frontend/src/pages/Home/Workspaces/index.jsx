@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { User, DoorOpen } from "lucide-react";
+import { User, DoorOpen, Grid } from "lucide-react"; // Importação do ícone Grid
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../../../../../backend/services/api.js";
 import ErrorDisplay from "../../../components/ErrorDisplay/index.jsx";
@@ -8,6 +8,7 @@ import LogOut from "../../../components/LogOut/index.jsx";
 
 function Workspaces() {
     const [username, setUsername] = useState("");
+    const [userRole, setUserRole] = useState(""); // Novo estado para armazenar o papel do usuário
     const [workspaces, setWorkspaces] = useState([]);
     const [selectedWorkspace, setSelectedWorkspace] = useState(null);
     const [error, setError] = useState(null);
@@ -21,6 +22,7 @@ function Workspaces() {
             try {
                 const userResponse = await api.get("/api/user/me");
                 setUsername(userResponse.data.name);
+                setUserRole(userResponse.data.role); // Armazenando o papel do usuário
 
                 const workspaceResponse = await api.get("/api/workspaces");
                 setWorkspaces(workspaceResponse.data);
@@ -55,6 +57,10 @@ function Workspaces() {
         setIsLogoutModalVisible(false);
     };
 
+    const handleDashboardClick = () => {
+        navigate("/dashboard"); // Direciona para a rota "/dashboard"
+    };
+
     return (
         <>
             <ErrorDisplay errorMessage={error} additionalMessage={additionalMessage} />
@@ -68,7 +74,18 @@ function Workspaces() {
                 className="flex flex-col h-full bg-gray-100 w-[15%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular"
             >
                 <div className="flex items-center justify-between p-4 border-b border-gray-300 mr-1">
-                    <User size={26} className="text-gray-600" />
+                    <div className="flex items-center">
+                        <User size={26} className="text-gray-600" />
+                        {/* Exibindo o ícone de Grid somente se o role do usuário for 'admin' */}
+                        {userRole === "admin" && (
+                            <Grid 
+                                size={26} 
+                                style={{ color: "rgb(200, 32, 167)" }} 
+                                className="ml-2 cursor-pointer"
+                                onClick={handleDashboardClick} // Função de clique para navegar
+                            />
+                        )}
+                    </div>
                     <p className="text-gray-800 font-neue-machina-plain-ultrabold text-lg mt-3 mr-20">{username}</p>
                 </div>
 

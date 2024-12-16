@@ -4,6 +4,7 @@ import Register from './pages/Auth/Register/index.jsx'
 import Home from "./pages/Home/Home.jsx"
 import AuthMiddleware from './middleware/authMiddleware.jsx'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Dashboard from './pages/Dashboard/index.jsx'
 
 function App() {
 
@@ -12,6 +13,7 @@ function App() {
      <Routes>
       <Route path="/" element={<Login />}/>
       <Route path="/register" element={<Register />}/>
+      <Route path="Dashboard" element={<Dashboard/>}/>
       <Route path="/*" element={
           <AuthMiddleware>
             <Home />
