@@ -8,9 +8,7 @@ function AddReport({ isVisible, onClose }) {
     const { studentId } = useParams(); // Obtém o ID do estudante dos parâmetros da URL
     const [error, setError] = useState(null);
     const [formData, setFormData] = useState({
-        date: "", // Data do relatório
         presenceStatus: "Presente", // Status inicial padrão
-        appointmentTime: "", // Horário do atendimento
         resume: "", // Resumo do atendimento
         strategies: "", // Estratégias (opcional)
         observations: "", // Observações (opcional)
@@ -22,21 +20,29 @@ function AddReport({ isVisible, onClose }) {
     };
 
     const handleSubmit = async (e) => {
+        e.preventDefault();
+    
         try {
-            // Envia os dados para o backend
-            await api.post(`/api/reports/${studentId}`, formData);
+            // Envia os dados ao backend
+            const response = await api.post(`/api/reports/${studentId}`, {
+                ...formData,
+            });
+    
+            // Log da resposta retornada pelo backend
+            console.log("Resposta do backend:", response.data);
+    
+            // Limpa o formulário
             setFormData({
-                date: "",
                 presenceStatus: "Presente",
-                appointmentTime: "",
                 resume: "",
                 strategies: "",
                 observations: "",
-            }); // Limpa o formulário
-            setError(null); // Reseta o erro, se houver
-            onClose(); // Fecha o modal após sucesso
+            });
+    
+            setError(null); // Reseta o erro
+            onClose(); // Fecha o modal
         } catch (err) {
-            // Trata o erro e exibe a mensagem
+            console.error("Erro ao enviar relatório:", err.response?.data || err.message);
             setError(err.response?.data?.message || "Erro ao adicionar relatório");
         }
     };
@@ -64,23 +70,8 @@ function AddReport({ isVisible, onClose }) {
                 <h1 className="text-xl font-bold mb-4 text-center font-neue-machina-plain-ultrabold">
                     Adicionar Relatório
                 </h1>
+
                 <form onSubmit={handleSubmit} className="space-y-4">
-                    {/* Data */}
-                    <div>
-                        <label htmlFor="date" className="block text-gray-700 mb-1">
-                            Data
-                        </label>
-                        <input
-                            type="date"
-                            id="date"
-                            name="date"
-                            value={formData.date}
-                            onChange={handleInputChange}
-                            autoComplete="off"
-                            className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
-                            required
-                        />
-                    </div>
                     {/* Status de Presença */}
                     <div>
                         <label htmlFor="presenceStatus" className="block text-gray-700 mb-1">
@@ -91,7 +82,6 @@ function AddReport({ isVisible, onClose }) {
                             name="presenceStatus"
                             value={formData.presenceStatus}
                             onChange={handleInputChange}
-                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             required
                         >
@@ -100,22 +90,7 @@ function AddReport({ isVisible, onClose }) {
                             <option value="Justificou">Justificou</option>
                         </select>
                     </div>
-                    {/* Horário de Atendimento */}
-                    <div>
-                        <label htmlFor="appointmentTime" className="block text-gray-700 mb-1">
-                            Horário de Atendimento *
-                        </label>
-                        <input
-                            type="time"
-                            id="appointmentTime"
-                            name="appointmentTime"
-                            value={formData.appointmentTime}
-                            onChange={handleInputChange}
-                            autoComplete="off"
-                            className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
-                            required
-                        />
-                    </div>
+
                     {/* Resumo */}
                     <div>
                         <label htmlFor="resume" className="block text-gray-700 mb-1">
@@ -126,13 +101,13 @@ function AddReport({ isVisible, onClose }) {
                             name="resume"
                             value={formData.resume}
                             onChange={handleInputChange}
-                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             rows="3"
                             placeholder="Descreva brevemente o atendimento"
                             required
                         />
                     </div>
+
                     {/* Estratégias */}
                     <div>
                         <label htmlFor="strategies" className="block text-gray-700 mb-1">
@@ -143,12 +118,12 @@ function AddReport({ isVisible, onClose }) {
                             name="strategies"
                             value={formData.strategies}
                             onChange={handleInputChange}
-                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             rows="2"
                             placeholder="Descreva estratégias aplicadas"
                         />
                     </div>
+
                     {/* Observações */}
                     <div>
                         <label htmlFor="observations" className="block text-gray-700 mb-1">
@@ -159,12 +134,12 @@ function AddReport({ isVisible, onClose }) {
                             name="observations"
                             value={formData.observations}
                             onChange={handleInputChange}
-                            autoComplete="off"
                             className="w-full border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-customPink"
                             rows="2"
                             placeholder="Adicione observações, se necessário"
                         />
                     </div>
+
                     {/* Botões */}
                     <div className="flex justify-between pt-2">
                         <motion.button
