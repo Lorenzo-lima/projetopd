@@ -73,22 +73,28 @@ function Workspaces() {
                 transition={{ duration: 0.5, ease: "easeInOut" }}
                 className="flex flex-col h-full bg-gray-100 w-[15%] min-h-screen shadow-md border-r border-gray-300 font-neue-machina-plain-regular"
             >
-                <div className="flex items-center justify-between p-4 border-b border-gray-300 mr-1">
-                    <div className="flex items-center">
-                        <User size={26} className="text-gray-600" />
-                        {/* Exibindo o ícone de Grid somente se o role do usuário for 'admin' */}
-                        {userRole === "admin" && (
-                            <Grid 
-                                size={26} 
-                                style={{ color: "rgb(200, 32, 167)" }} 
-                                className="ml-2 cursor-pointer"
-                                onClick={handleDashboardClick} // Função de clique para navegar
-                            />
-                        )}
-                    </div>
-                    <p className="text-gray-800 font-neue-machina-plain-ultrabold text-lg mt-3 mr-20">{username}</p>
+                {/* Cabeçalho com ícones */}
+                <div className="relative flex items-center justify-between p-4 border-b border-gray-300">
+                    {/* Ícone User movido mais à esquerda */}
+                    <User size={26} className="text-gray-600 absolute left-0 ml-2" />
+
+                    {/* Texto Admin centralizado */}
+                    <p className="text-gray-800 font-neue-machina-plain-ultrabold text-lg mx-auto">
+                        Admin
+                    </p>
+
+                    {/* Ícone Grid no extremo direito */}
+                    {userRole === "admin" && (
+                        <Grid
+                            size={26}
+                            style={{ color: "rgb(200, 32, 167)" }}
+                            className="cursor-pointer"
+                            onClick={handleDashboardClick}
+                        />
+                    )}
                 </div>
 
+                {/* Lista de Workspaces */}
                 <div className="flex-1 flex flex-col px-6 mt-6 overflow-x-auto custom-scrollbar h-screen">
                     <h1 className="text-lg font-neue-machina-plain-ultrabold mb-4 text-center">
                         Workspaces
@@ -100,7 +106,7 @@ function Workspaces() {
                                 onClick={() => handleWorkspaceClick(workspace._id)}
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
-                                className={`rounded-md py-3 px-4 text-lg font-medium text-center cursor-pointer transition duration-300 ${
+                                className={`flex items-center justify-center rounded-md py-3 px-4 h-[48px] cursor-pointer transition duration-300 ${
                                     selectedWorkspace === workspace._id
                                         ? "bg-customPink text-white"
                                         : "bg-gray-200 text-gray-800 hover:bg-customPink hover:text-white"
@@ -112,6 +118,7 @@ function Workspaces() {
                     </ul>
                 </div>
 
+                {/* Botão de Logout */}
                 <div className="flex items-center justify-center p-4 border-t border-gray-300">
                     <motion.button
                         type="button"

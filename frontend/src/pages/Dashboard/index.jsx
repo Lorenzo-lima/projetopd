@@ -7,7 +7,7 @@ function Dashboard() {
 
     const config = {
         headers: {
-            "Api-Key": import.meta.env.VITE_API_KEY, // Certifique-se de que VITE_API_KEY está configurado no .env
+            "Api-Key": import.meta.env.VITE_API_KEY,
         },
     };
 
@@ -52,9 +52,10 @@ function Dashboard() {
                 </h1>
 
                 {error && <p className="text-red-500 mb-4">{error}</p>}
-
                 <div className="grid grid-cols-5 gap-4">
+
                     {/* Alunos Ativos */}
+
                     <div className="bg-green-100 border border-green-300 rounded-lg shadow p-4 flex items-center">
                         <div className="text-green-500 text-4xl mr-4">✔️</div>
                         <div>
@@ -64,6 +65,7 @@ function Dashboard() {
                     </div>
 
                     {/* Alunos em Atenção */}
+
                     <div className="bg-orange-100 border border-orange-300 rounded-lg shadow p-4 flex items-center">
                         <div className="text-orange-500 text-4xl mr-4">⚠️</div>
                         <div>
@@ -72,7 +74,18 @@ function Dashboard() {
                         </div>
                     </div>
 
+                    {/* Alunos em Recuperação */}
+
+                    <div className="bg-blue-100 border border-blue-300 rounded-lg shadow p-4 flex items-center">
+                        <div className="text-blue-500 text-4xl mr-4">🔄</div>
+                        <div>
+                            <p className="text-gray-700 font-semibold">Alunos em Recuperação</p>
+                            <p className="text-gray-800 text-xl font-bold">{recoveryCount}</p>
+                        </div>
+                    </div>
+
                     {/* Alunos Suspensos */}
+
                     <div className="bg-pink-100 border border-pink-300 rounded-lg shadow p-4 flex items-center">
                         <div className="text-pink-500 text-4xl mr-4">👥</div>
                         <div>
@@ -81,16 +94,9 @@ function Dashboard() {
                         </div>
                     </div>
 
+
                     {/* Alunos Inativos */}
 
-                    {/* Alunos em Recuperação */}
-                    <div className="bg-blue-100 border border-blue-300 rounded-lg shadow p-4 flex items-center">
-                        <div className="text-blue-500 text-4xl mr-4">🔄</div>
-                        <div>
-                            <p className="text-gray-700 font-semibold">Alunos em Recuperação</p>
-                            <p className="text-gray-800 text-xl font-bold">{recoveryCount}</p>
-                        </div>
-                    </div>
                     <div className="bg-gray-100 border border-gray-300 rounded-lg shadow p-4 flex items-center">
                         <div className="text-gray-500 text-4xl mr-4">❌</div>
                         <div>
